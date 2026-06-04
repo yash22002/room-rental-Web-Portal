@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rentMax = $_POST['rentMax'];
     $desc = mysqli_real_escape_string($conn, $_POST['description']);
     
-    // Amenities array handling
+    
     $amenities = isset($_POST['amenities']) ? implode(", ", (array)$_POST['amenities']) : "";
 
     $sql = "UPDATE listings SET 
