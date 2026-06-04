@@ -9,5 +9,5 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-session_start(); // Session start karna zaroori hai role-tracking ke liye
+session_start();
 ?>
