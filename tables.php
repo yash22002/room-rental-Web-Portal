@@ -1,11 +1,10 @@
 <?php
-// Connection ko yahan include kiya gaya hai
+
 include 'config.php'; 
 
 echo "<h2 style='font-family:sans-serif;'>Broker-Free Rental Portal: Table Setup</h2>";
 
 $tables = [
-    // 1. Users Table (Login/Signup)
     "users" => "CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         full_name VARCHAR(100) NOT NULL,
@@ -16,7 +15,6 @@ $tables = [
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )",
 
-    // 2. Listings Table (Research Features: Trust Score, Heat Score, Vacancy Loss)
     "listings" => "CREATE TABLE IF NOT EXISTS listings (
         id INT AUTO_INCREMENT PRIMARY KEY,
         owner_id INT,
@@ -36,7 +34,6 @@ $tables = [
         FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE
     )",
 
-    // 3. Media Table (Property Images/Videos)
     "property_media" => "CREATE TABLE IF NOT EXISTS property_media (
         id INT AUTO_INCREMENT PRIMARY KEY,
         listing_id INT,
@@ -45,7 +42,6 @@ $tables = [
         FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE
     )",
 
-    // 4. Analytics Table (Tracking Views & Clicks)
     "analytics" => "CREATE TABLE IF NOT EXISTS analytics (
         id INT AUTO_INCREMENT PRIMARY KEY,
         listing_id INT,
@@ -54,7 +50,6 @@ $tables = [
         FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE
     )",
 
-    // 5. Enquiries Table (Tenant-Owner Communication)
     "enquiries" => "CREATE TABLE IF NOT EXISTS enquiries (
         id INT AUTO_INCREMENT PRIMARY KEY,
         tenant_id INT,
@@ -66,7 +61,6 @@ $tables = [
         FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE
     )",
 
-    // 6. Reviews Table (Tenant Feedback & Rating)
     "reviews" => "CREATE TABLE IF NOT EXISTS reviews (
         id INT AUTO_INCREMENT PRIMARY KEY,
         listing_id INT NOT NULL,
@@ -79,7 +73,6 @@ $tables = [
     )"
 ];
 
-// Loop chala kar saari tables create karna
 foreach ($tables as $tableName => $sql) {
     if (mysqli_query($conn, $sql)) {
         echo "<p style='color:green; font-family:sans-serif;'>✅ Table <b>'$tableName'</b> created successfully!</p>";
