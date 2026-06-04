@@ -1,12 +1,11 @@
 <?php
 include 'config.php';
 
-// 1. Max views nikalna Heat Score percentage ke liye
+
 $max_res = mysqli_query($conn, "SELECT MAX(view_count) as max_v FROM analytics");
 $max_row = mysqli_fetch_assoc($max_res);
 $max_val = ($max_row['max_v'] > 0) ? $max_row['max_v'] : 1;
 
-// 2. Multiple Filters Handle Karna
 $conditions = ["l.status = 'Available'"];
 
 if (!empty($_GET['city'])) {
@@ -24,7 +23,7 @@ if (!empty($_GET['max_rent'])) {
 
 $where_sql = implode(" AND ", $conditions);
 
-// 3. Filtered properties fetch karna
+
 $sql = "SELECT l.*, u.full_name, a.view_count 
         FROM listings l 
         JOIN users u ON l.owner_id = u.id 
@@ -46,7 +45,6 @@ $result = mysqli_query($conn, $sql);
         .room-card { background: #1e1e1e; border: 1px solid #333; border-radius: 18px; transition: 0.3s; overflow: hidden; }
         .room-card:hover { transform: translateY(-5px); border-color: #0d6efd; }
         .property-img { height: 180px; object-fit: cover; width: 100%; border-bottom: 1px solid #333; }
-        /* Savings Tracker Styling */
         .savings-badge { background: rgba(46, 204, 113, 0.1); color: #2ecc71; border: 1px dashed #2ecc71; border-radius: 10px; padding: 10px; font-size: 0.75rem; text-align: center; }
     </style>
 </head>
@@ -93,7 +91,6 @@ $result = mysqli_query($conn, $sql);
                         $img = mysqli_fetch_assoc($img_q);
                         $src = ($img) ? $img['file_path'] : 'https://via.placeholder.com/400x200';
                         
-                        // Heat Score Calculation
                         $heat = ($row['view_count'] / $max_val) * 100;
                         if($heat < 10) $heat = 10;
                     ?>
