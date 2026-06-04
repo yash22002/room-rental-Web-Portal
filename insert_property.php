@@ -19,15 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vacancy_date = date('Y-m-d'); 
     $trust_score = 100; 
 
-    // Database Entry
     $sql = "INSERT INTO listings (owner_id, city, property_type, suitable_for, furnished, rent_min, rent_max, description, amenities, vacancy_start_date, trust_score) 
             VALUES ('$owner_id', '$city', '$type', '$suitable', '$furnished', '$rent_min', '$rent_max', '$desc', '$amenities', '$vacancy_date', '$trust_score')";
 
     if (mysqli_query($conn, $sql)) {
         $listing_id = mysqli_insert_id($conn);
 
-        // FILE UPLOAD LOGIC
-        // Aapke screenshot ke mutabiq 'server' folder wahi hai jahan ye file hai
         $upload_dir = "server/"; 
         
         if (!is_dir($upload_dir)) {
@@ -42,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 $file_type = (strpos($_FILES[$file_key]['type'], 'video') !== false) ? 'video' : 'image';
 
-                // FIXED: tmp_name ka use
                 if (move_uploaded_file($_FILES[$file_key]['tmp_name'], $target_path)) {
                     $sql_media = "INSERT INTO property_media (listing_id, file_path, file_type) VALUES ('$listing_id', '$target_path', '$file_type')";
                     mysqli_query($conn, $sql_media);
