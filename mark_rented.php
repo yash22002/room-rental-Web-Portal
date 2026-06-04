@@ -5,7 +5,6 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $owner_id = $_SESSION['user_id'];
 
-    // Status 'Available' se 'Rented' karein
     $sql = "UPDATE listings SET status = 'Rented' WHERE id = '$id' AND owner_id = '$owner_id'";
 
     if (mysqli_query($conn, $sql)) {
