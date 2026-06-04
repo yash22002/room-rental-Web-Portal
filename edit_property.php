@@ -6,14 +6,12 @@ if (!isset($_GET['id'])) { header("Location: Owner.php"); exit(); }
 $id = mysqli_real_escape_string($conn, $_GET['id']);
 $owner_id = $_SESSION['user_id'];
 
-// Purana data fetch karein
 $sql = "SELECT * FROM listings WHERE id = '$id' AND owner_id = '$owner_id'";
 $result = mysqli_query($conn, $sql);
 $data = mysqli_fetch_assoc($result);
 
 if (!$data) { die("Property not found!"); }
 
-// Amenities ko array mein convert karein
 $old_amenities = explode(", ", $data['amenities']);
 ?>
 
