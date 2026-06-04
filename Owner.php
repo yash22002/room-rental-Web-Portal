@@ -18,7 +18,6 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 $sql = "SELECT * FROM listings $where_clause ORDER BY created_at DESC";
 $result = mysqli_query($conn, $sql);
 
-// Summary Statistics
 $total_active = mysqli_num_rows($result);
 $total_loss_all = 0;
 while($r = mysqli_fetch_assoc($result)) {
