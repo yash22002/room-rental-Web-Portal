@@ -1,7 +1,6 @@
 <?php
 include 'config.php';
 
-// 1. Check if ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: Tenents.php");
     exit();
@@ -9,10 +8,8 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $id = mysqli_real_escape_string($conn, $_GET['id']);
 
-// 2. Heat Score Update (View Count +1)
 mysqli_query($conn, "UPDATE analytics SET view_count = view_count + 1 WHERE listing_id = '$id'");
 
-// 3. Fetch Property & Owner Details
 $sql = "SELECT l.*, u.full_name, u.mobile FROM listings l 
         JOIN users u ON l.owner_id = u.id WHERE l.id = '$id'";
 $res = mysqli_query($conn, $sql);
@@ -20,7 +17,6 @@ $data = mysqli_fetch_assoc($res);
 
 if (!$data) { die("<h2 style='color:white; text-align:center; margin-top:50px;'>Property Not Found!</h2>"); }
 
-// 4. Fetch Media & Reviews
 $images = mysqli_query($conn, "SELECT file_path FROM property_media WHERE listing_id = '$id'");
 $rev_sql = "SELECT r.*, u.full_name FROM reviews r JOIN users u ON r.user_id = u.id WHERE r.listing_id = '$id' ORDER BY r.created_at DESC";
 $rev_res = mysqli_query($conn, $rev_sql);
